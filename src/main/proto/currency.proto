@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package currency;
+
+option java_package = "br.com.proto.currency";
+option java_multiple_files = true;
+
+message Currency{
+    int32 currency_id = 1;
+    string currency_name = 2;
+    string currency_code 3;
+}
+
+message CreateCurrencyRequest{
+    Currency currency = 1;
+}
+
+message CreateCurrencyRequest{
+    string result = 1;
+}
+
+service CurrencyService{
+    rpc CreateCurrency (CreateCurrencyRequest) returns (CreateCurrencyResponse){};
+
+}

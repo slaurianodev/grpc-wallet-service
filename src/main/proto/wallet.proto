@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package wallet;
+
+option java_package = "br.com.proto.wallet";
+option java_multiple_files = true;
+
+message Deposit{
+    int32 user_id = 1;
+    double amount = 2;
+    int32 currency = 3;
+}
+
+message DepositRequest{
+    Deposit deposit = 1;
+}
+
+message DepositResponse{}
+
+
+
+service WalletService{
+    rpc Deposit(DepositRequest) returns (DepositResponse){};
+
+}

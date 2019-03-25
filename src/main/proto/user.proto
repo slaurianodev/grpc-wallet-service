@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package user;
+
+option java_package = "br.com.proto.user";
+option java_multiple_files = true;
+
+message User {
+    int32 id = 1;
+    string name = 2;
+}
+
+message CreateUserRequest {
+    User user = 1;
+}
+
+message CreateUserResponse{
+    string result = 1;
+}
+
+message ReadUserRequest{
+    int32 user_id = 1;
+}
+
+message ReadUserResponse{
+    User user = 1;
+}
+
+service UserService {
+    rpc CreateUser (CreateUserRequest) returns (CreateUserResponse){};
+    rpc ReadUser (ReadUserRequest) returns (ReadUserResponse){};
+}
