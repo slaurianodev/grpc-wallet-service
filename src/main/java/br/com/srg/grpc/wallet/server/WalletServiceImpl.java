@@ -153,6 +153,28 @@ public class WalletServiceImpl extends WalletServiceGrpc.WalletServiceImplBase {
         }
     }
 
+    @Override
+    public void balance(BalanceRequest request, StreamObserver<BalanceResponse> responseObserver) {
+        WalletsDAO walletsDAO = new WalletsDAO();
+        UsersDAO usersDAO = new UsersDAO();
+
+        usersDAO.initDAOSession();
+        Users userPersist = usersDAO.getById(request.getUserId());
+
+        walletsDAO.initDAOSession();
+        walletsDAO.listByUser(userPersist).iterator().forEachRemaining(
+                wallet -> responseObserver.onNext(
+                        BalanceResponse.newBuilder()
+                                .setWallet(persistToObject(wallet))
+                                .build()
+                )
+        );
+
+        walletsDAO.closeSession();
+
+        responseObserver.onCompleted();
+    }
+
     private Users getUserPersist(Integer userId) throws SQLException{
         UsersDAO usersDAO = new UsersDAO();
 
@@ -182,5 +204,13 @@ public class WalletServiceImpl extends WalletServiceGrpc.WalletServiceImplBase {
         Wallets wallet = walletsDAO.getByUserAndCurrency(params);
 
         return wallet;
+    }
+
+    private Wallet persistToObject(Wallets wallet){
+        return Wallet.newBuilder()
+                .setAmount(wallet.getAmount())
+                .setCurrencyCode(wallet.getCurrency().getCurrencyCode())
+                .setUserId(wallet.getUser().getUserId())
+                .build();
     }
 }
