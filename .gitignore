@@ -4,4 +4,4 @@ out/
 *.ipr
 *.iws
 build/ 
-
+.gradle/

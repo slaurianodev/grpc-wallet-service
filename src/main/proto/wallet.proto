@@ -5,21 +5,36 @@ package wallet;
 option java_package = "br.com.proto.wallet";
 option java_multiple_files = true;
 
-message Deposit{
+message Wallet{
     int32 user_id = 1;
     double amount = 2;
-    int32 currency = 3;
+    string currency_code = 3;
 }
 
 message DepositRequest{
-    Deposit deposit = 1;
+    Wallet wallet = 1;
 }
 
-message DepositResponse{}
+message DepositResponse{
 
+}
 
+message WithdrawRequest{
+    Wallet wallet = 1;
+}
+
+message WithdrawResponse{}
+
+message BalanceRequest{
+    int32 user_id = 1;
+}
+
+message BalanceResponse{
+    Wallet wallet = 1;
+}
 
 service WalletService{
     rpc Deposit(DepositRequest) returns (DepositResponse){};
-
+    rpc Withdraw(WithdrawRequest) returns (WithdrawResponse){};
+    rpc Balance(BalanceRequest) returns (stream BalanceResponse){};
 }
