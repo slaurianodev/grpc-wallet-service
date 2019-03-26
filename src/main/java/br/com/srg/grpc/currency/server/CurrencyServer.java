@@ -1,4 +1,4 @@
-package br.com.srg.grpc.user.server;
+package br.com.srg.grpc.currency.server;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -6,13 +6,13 @@ import io.grpc.protobuf.services.ProtoReflectionService;
 
 import java.io.IOException;
 
-public class UserServer {
+public class CurrencyServer {
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        System.out.println("Init User Server");
+        System.out.println("Init Currency Server");
 
-        Server server = ServerBuilder.forPort(9001)
-                .addService(new UserServiceImpl())
+        Server server = ServerBuilder.forPort(9002)
+                .addService(new CurrencyServiceImpl())
                 .addService(ProtoReflectionService.newInstance()) //reflection
                 .build();
 

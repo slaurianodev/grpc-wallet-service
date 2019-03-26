@@ -8,18 +8,24 @@ option java_multiple_files = true;
 message Currency{
     int32 currency_id = 1;
     string currency_name = 2;
-    string currency_code 3;
+    string currency_code = 3;
 }
 
 message CreateCurrencyRequest{
     Currency currency = 1;
 }
 
-message CreateCurrencyRequest{
+message CreateCurrencyResponse{
     string result = 1;
+}
+
+message ListCurrenciesRequest{}
+
+message ListCurrenciesResponse{
+    Currency currency = 1;
 }
 
 service CurrencyService{
     rpc CreateCurrency (CreateCurrencyRequest) returns (CreateCurrencyResponse){};
-
+    rpc ListCurrencies (ListCurrenciesRequest) returns (stream ListCurrenciesResponse){}
 }
