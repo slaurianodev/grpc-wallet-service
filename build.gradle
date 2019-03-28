@@ -4,7 +4,7 @@ version '1.0-SNAPSHOT'
 apply plugin:'java'
 apply plugin:'com.google.protobuf'
 apply plugin: 'idea'
-
+apply plugin: 'application'
 
 sourceCompatibility = 1.8
 
@@ -56,5 +56,22 @@ protobuf {
         all()*.plugins {
             grpc {}
         }
+    }
+}
+
+idea {
+    module {
+        sourceDirs +=     file("${projectDir}/build/generated/source/proto/main/java");
+        sourceDirs += file("${projectDir}/build/generated/source/proto/main/grpc");
+    }
+}
+
+mainClassName = 'br.com.srg.grpc.wallet.server.WalletServer'
+jar {
+    manifest{
+        attributes('Main-Class':mainClassName)
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }

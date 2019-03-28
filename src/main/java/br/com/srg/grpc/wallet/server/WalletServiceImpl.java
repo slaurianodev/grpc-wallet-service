@@ -29,7 +29,6 @@ public class WalletServiceImpl extends WalletServiceGrpc.WalletServiceImplBase {
             if(userPersist == null){
                 responseObserver.onError(
                         Status.NOT_FOUND
-                                .withDescription("There is an error during deposit process.")
                                 .withDescription("User not found")
                                 .asRuntimeException()
                 );
@@ -40,7 +39,6 @@ public class WalletServiceImpl extends WalletServiceGrpc.WalletServiceImplBase {
             if(currenciyPersit == null){
                 responseObserver.onError(
                         Status.NOT_FOUND
-                                .withDescription("There is an error during deposit process.")
                                 .withDescription("Currency not found")
                                 .asRuntimeException()
                 );
